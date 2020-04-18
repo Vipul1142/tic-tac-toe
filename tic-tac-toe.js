@@ -1,10 +1,8 @@
 const {
-    welcomeScreen
-} = require("./src/art")
-const {
-    readMenuOption,
-    executeMenu
-} = require("./src/nucleas")
+    welcomeScreen,
+    executeMenu,
+    readMenuOption
+} = require("./src/manager")
 
 function initGame() {
     welcomeScreen();

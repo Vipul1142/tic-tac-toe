@@ -1,10 +1,9 @@
 const {
-    repeater,
+    clear,
+    color,
     log,
-    clear
+    repeater
 } = require("./nucleas")
-
-const color = require("colors/safe");
 
 const newl = "\n";
 const newt = "\t";
