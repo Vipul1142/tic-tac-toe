@@ -1,9 +1,13 @@
 const {
-    showTitle,
-    welcomeScreen,
-    log,
-    clear
+    welcomeScreen
 } = require("./draw")
-const readInput = require("readline-sync");
+const {
+    readMenuOption,
+    executeMenu
+} = require("./nucleas")
 
-welcomeScreen();
+function initGame() {
+    welcomeScreen();
+    executeMenu(readMenuOption());
+}
+initGame();
