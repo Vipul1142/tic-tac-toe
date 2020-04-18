@@ -1,10 +1,10 @@
 const {
     welcomeScreen
-} = require("./draw")
+} = require("./src/art")
 const {
     readMenuOption,
     executeMenu
-} = require("./nucleas")
+} = require("./src/nucleas")
 
 function initGame() {
     welcomeScreen();
