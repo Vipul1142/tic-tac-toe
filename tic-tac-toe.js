@@ -1,11 +1,11 @@
 const {
     welcomeScreen,
-    executeMenu,
+    executeMenuOption,
     readMenuOption
 } = require("./src/manager")
 
 function initGame() {
     welcomeScreen();
-    executeMenu(readMenuOption());
+    executeMenuOption(readMenuOption());
 }
 initGame();
