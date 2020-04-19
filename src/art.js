@@ -16,7 +16,7 @@ function showTitle() {
     log("\t\t" + " ||   ||  ||        ||   ||==||  ||        ||   ||  ||  ||----");
     log("\t\t" + " ||   ||  ||__||    ||   ||  ||  ||__||    ||   ||__||  ||____");
     log(repeater(newt, 9) + "By Vipul");
-    log();
+    log(newl + newl);
 }
 
 function welcomeScreen(params) {
