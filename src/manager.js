@@ -5,7 +5,9 @@ const {
     color,
     repeater,
     arrayBuilder,
-    createBoard
+    createBoard,
+    switchTurn,
+    assignSymbol
 } = require("./nucleas")
 const {
     showTitle,
@@ -27,8 +29,8 @@ const readModeOption = function () {
     return selectedOption;
 };
 
-const readSymbol = function () {
-    let message = tab + "Choose your weapon X/O";
+const readSymbol = function (name) {
+    let message = tab + name + " Choose your weapon X/O";
     log(message);
     let selectedOption = readInput(/^[xo]$/gi);
     return selectedOption.toUpperCase();
@@ -42,8 +44,7 @@ const readName = function (message) {
 const updateScreen = function (game) {
     showTitle();
     log(game.frame);
-    log("\n");
-    log(game.turn + "'s turn");
+    log("update wala h ye");
 };
 
 const readPlayerName = function (game) {
@@ -90,16 +91,20 @@ const getGameInfo = function (game) {
     game.player1 = { name: "", symbol: "", inputs: [] };
     game.player2 = { name: "", symbol: "", inputs: [] };
     game = readPlayerName(game);
-    game.symbol = readSymbol()
+    game.player1.symbol = readSymbol(game.player1.name);
+    game.player2.symbol = assignSymbol(game.player1.symbol);
     return game;
 }
 
 const playGame = function (game) {
-    game.turn = game.player1.name;
+    game.turn = "player1";
     let blocksLeft = 9;
     while (blocksLeft--) {
         updateScreen(game);
+        const currentPlayerName = game[game.turn].name;
+        const currentPlayerSymbol = game[game.turn].symbol;
 
+        game.turn = switchTurn();
     }
 }
 
@@ -107,5 +112,5 @@ module.exports = {
     readMenuOption,
     executeMenu,
     welcomeScreen,
-    playGame
+    startGame
 };
