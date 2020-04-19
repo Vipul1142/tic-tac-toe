@@ -1,28 +1,61 @@
 const {
+    readLine,
     log,
     readInput,
-    readLine,
-    color
+    color,
+    repeater,
+    arrayBuilder,
+    createBoard
 } = require("./nucleas")
 const {
     showTitle,
     welcomeScreen
 } = require("./art")
-
+const tab = "\t\t\t\t";
 
 const readMenuOption = function () {
     let optionMsg = "Choose menu option";
     log(optionMsg);
-    let selectedOption = readInput([1, 2, 3, 0]);
+    let selectedOption = readInput(/^[0-3]$/g);
     return selectedOption;
+};
+
+const readModeOption = function () {
+    let message = tab + "1. VS Human\t2. VS Bot";
+    log(message);
+    let selectedOption = readInput(/^[12]$/g);
+    return selectedOption;
+};
+
+const readSymbol = function () {
+    let message = tab + "Choose your weapon X/O";
+    log(message);
+    let selectedOption = readInput(/^[xo]$/gi);
+    return selectedOption.toUpperCase();
+};
+
+const readName = function (message) {
+    let name = readLine.question(message);
+    return name;
+};
+
+const readPlayerName = function (game) {
+    game.player1.name = readName("Enter your name : ");
+    if (game.mode == 1) {
+        game.player2.name = readName("Enter your friend's name : ");
+    }
+    else {
+        game.player2.name = "Bot";
+    }
+    return game;
 };
 
 const executeMenu = function (option) {
     const menu = {
-        //1: functions,
+        1: playGame,
         //2: functions,
         //3: functions,
-        0: exitGame
+        0: exitGame,
     };
     menu[option]();
 };
@@ -36,8 +69,26 @@ const exitGame = function () {
     executeMenu(readMenuOption());
 };
 
+const getGameInfo = function (game) {
+    game.data = arrayBuilder(" ", 10);
+    game.frame = createBoard(game.data);
+    showTitle();
+    game.mode = readModeOption();
+    game.player1 = { name: "", symbol: "", inputs: [] };
+    game.player2 = { name: "", symbol: "", inputs: [] };
+    game = readPlayerName(game);
+    game.symbol = readSymbol()
+    return game;
+}
+
+const playGame = function () {
+    let game = {};
+    game = getGameInfo(game);
+}
+
 module.exports = {
     readMenuOption,
     executeMenu,
-    welcomeScreen
+    welcomeScreen,
+    playGame
 };
