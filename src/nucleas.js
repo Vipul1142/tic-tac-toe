@@ -27,26 +27,24 @@ const createDataLine = function (space, data1, data2, data3) {
     return line;
 };
 
-const assignSymbol = function (symbol) {
-    if (symbol == "X") {
-        return "O";
+const swapValue = function (key, first, second) {
+    if (key == first) {
+        return second;
+    } else {
+        return first;
     }
-    else {
-        return "X";
-    }
+};
+
+const swapSymbol = function (symbol) {
+    return swapValue(symbol, "X", "O");
 }
 
-const switchTurn = function (playerName) {
-    if (playerName == "player1") {
-        return "player2";
-    }
-    else {
-        return "player1";
-    }
+const swapPlayer = function (playerName) {
+    return swapValue(symbol, "player1", "player2");
 }
 
 function createBoard(boardData) {
-    const spc = repeater(" ", 40);
+    const spc = repeater(" ", 35);
     const borderLine = spc + repeater("+---", 3) + "+\n";
     const dataLine1 = createDataLine(spc, boardData[1], boardData[2], boardData[3]);
     const dataLine2 = createDataLine(spc, boardData[4], boardData[5], boardData[6]);
@@ -57,13 +55,13 @@ function createBoard(boardData) {
 module.exports = {
     log,
     clear,
+    color,
     repeater,
+    readLine,
     readInput,
     arrayBuilder,
     createDataLine,
     createBoard,
-    assignSymbol,
-    switchTurn,
-    readLine,
-    color
+    swapSymbol,
+    swapPlayer
 };
