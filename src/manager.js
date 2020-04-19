@@ -42,6 +42,8 @@ const readName = function (message) {
 const updateScreen = function (game) {
     showTitle();
     log(game.frame);
+    log("\n");
+    log(game.turn + "'s turn");
 };
 
 const readPlayerName = function (game) {
@@ -57,7 +59,7 @@ const readPlayerName = function (game) {
 
 const executeMenu = function (option) {
     const menu = {
-        1: playGame,
+        1: startGame,
         //2: functions,
         //3: functions,
         0: exitGame,
@@ -65,8 +67,11 @@ const executeMenu = function (option) {
     menu[option]();
 };
 
-const startGame = function (game) {
-    updateScreen(game);
+const startGame = function () {
+    showTitle();
+    let game = {};
+    game = getGameInfo(game);
+    playGame(game);
 };
 
 const exitGame = function () {
@@ -89,11 +94,13 @@ const getGameInfo = function (game) {
     return game;
 }
 
-const playGame = function () {
-    showTitle();
-    let game = {};
-    game = getGameInfo(game);
-    startGame(game);
+const playGame = function (game) {
+    game.turn = game.player1.name;
+    let blocksLeft = 9;
+    while (blocksLeft--) {
+        updateScreen(game);
+
+    }
 }
 
 module.exports = {
