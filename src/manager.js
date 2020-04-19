@@ -39,6 +39,11 @@ const readName = function (message) {
     return name;
 };
 
+const updateScreen = function (game) {
+    showTitle();
+    log(game.frame);
+};
+
 const readPlayerName = function (game) {
     game.player1.name = readName("Enter your name : ");
     if (game.mode == 1) {
@@ -60,6 +65,10 @@ const executeMenu = function (option) {
     menu[option]();
 };
 
+const startGame = function (game) {
+    updateScreen(game);
+};
+
 const exitGame = function () {
     let exitMsg = "Exit?";
     if (readLine.keyInYNStrict(exitMsg)) {
@@ -72,7 +81,6 @@ const exitGame = function () {
 const getGameInfo = function (game) {
     game.data = arrayBuilder(" ", 10);
     game.frame = createBoard(game.data);
-    showTitle();
     game.mode = readModeOption();
     game.player1 = { name: "", symbol: "", inputs: [] };
     game.player2 = { name: "", symbol: "", inputs: [] };
@@ -82,8 +90,10 @@ const getGameInfo = function (game) {
 }
 
 const playGame = function () {
+    showTitle();
     let game = {};
     game = getGameInfo(game);
+    startGame(game);
 }
 
 module.exports = {
