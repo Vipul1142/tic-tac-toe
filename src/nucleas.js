@@ -27,6 +27,23 @@ const createDataLine = function (space, data1, data2, data3) {
     return line;
 };
 
+const assignSymbol = function (symbol) {
+    if (symbol == "X") {
+        return "O";
+    }
+    else {
+        return "X";
+    }
+}
+
+const switchTurn = function (playerName) {
+    if (playerName == "player1") {
+        return "player2";
+    }
+    else {
+        return "player1";
+    }
+}
 
 function createBoard(boardData) {
     const spc = repeater(" ", 40);
@@ -45,6 +62,8 @@ module.exports = {
     arrayBuilder,
     createDataLine,
     createBoard,
+    assignSymbol,
+    switchTurn,
     readLine,
     color
 };
