@@ -2,6 +2,7 @@
 // HoOsH!! These are sensitives,do not touch
 const log = console.log;
 const clear = console.clear;
+const tab = "\t\t\t\t"
 const readLine = require("readline-sync");
 const color = require("colors/safe");
 
@@ -14,8 +15,32 @@ const repeater = function (string, times) {
     return string.repeat(times);
 };
 
-const readInput = function (constraint) {
+const readInput = function (message, constraint) {
+    log(message);
     return readLine.prompt({ limit: constraint });
+};
+
+const readMenuOption = function () {
+    let message = "Choose menu option";
+    let selectedOption = readInput(message, /^[0-3]$/g);
+    return selectedOption;
+};
+
+const readModeOption = function () {
+    let message = tab + "1. VS Human\t2. VS Bot";
+    let selectedOption = readInput(message, /^[12]$/g);
+    return selectedOption;
+};
+
+const readSymbol = function (name) {
+    let message = tab + name + " Choose your weapon X/O";
+    let selectedOption = readInput(message, /^[xo]$/gi);
+    return selectedOption.toUpperCase();
+};
+
+const readName = function (message) {
+    let name = readLine.question(message);
+    return name;
 };
 
 const arrayBuilder = function (char, size) {
@@ -63,5 +88,9 @@ module.exports = {
     createDataLine,
     createBoard,
     swapSymbol,
-    swapPlayer
+    swapPlayer,
+    readMenuOption,
+    readModeOption,
+    readSymbol,
+    readName
 };
