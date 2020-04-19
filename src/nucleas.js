@@ -65,7 +65,7 @@ const swapSymbol = function (symbol) {
 }
 
 const swapPlayer = function (playerName) {
-    return swapValue(symbol, "player1", "player2");
+    return swapValue(playerName, "player1", "player2");
 }
 
 function createBoard(boardData) {
