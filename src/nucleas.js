@@ -111,6 +111,35 @@ function createBoard(boardData) {
     return borderLine + dataLine1 + borderLine + dataLine2 + borderLine + dataLine3 + borderLine;
 }
 
+const winOrNot = function (gameBlocks) {
+    gb = gameBlocks;
+    if (gb[1] == gb[2] && gb[1] == gb[3] && gb[1] != " ") {
+        return gb[1];
+    }
+    if (gb[4] == gb[5] && gb[4] == gb[6] && gb[4] != " ") {
+        return gb[4];
+    }
+    if (gb[7] == gb[8] && gb[7] == gb[9] && gb[7] != " ") {
+        return gb[7];
+    }
+    if (gb[1] == gb[4] && gb[1] == gb[7] && gb[1] != " ") {
+        return gb[1];
+    }
+    if (gb[2] == gb[5] && gb[2] == gb[8] && gb[2] != " ") {
+        return gb[2];
+    }
+    if (gb[3] == gb[6] && gb[3] == gb[9] && gb[3] != " ") {
+        return gb[3];
+    }
+    if (gb[3] == gb[5] && gb[3] == gb[7] && gb[3] != " ") {
+        return gb[3];
+    }
+    if (gb[1] == gb[5] && gb[1] == gb[9] && gb[1] != " ") {
+        return gb[1];
+    }
+    return false;
+}
+
 module.exports = {
     log,
     clear,
@@ -125,5 +154,6 @@ module.exports = {
     readModeOption,
     readSymbol,
     readName,
+    winOrNot,
     getSelectedBlock
 };
