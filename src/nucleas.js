@@ -43,6 +43,10 @@ const readName = function (message) {
     return name;
 };
 
+const readSelectedBlock = function () {
+    return readLine.keyIn("Choose Number : ", { limit: '$<1-9>' });
+};
+
 const arrayBuilder = function (char, size) {
     return new Array(size).fill(char);
 };
@@ -68,6 +72,10 @@ const swapPlayer = function (playerName) {
     return swapValue(playerName, "player1", "player2");
 }
 
+const isBlockFree = function (boardData, selectedBlock) {
+    return boardData[selectedBlock] == " ";
+}
+
 function createBoard(boardData) {
     const spc = repeater(" ", 35);
     const borderLine = spc + repeater("+---", 3) + "+\n";
@@ -87,6 +95,8 @@ module.exports = {
     arrayBuilder,
     createDataLine,
     createBoard,
+    isBlockFree,
+    readSelectedBlock,
     swapSymbol,
     swapPlayer,
     readMenuOption,
