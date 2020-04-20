@@ -73,7 +73,18 @@ const swapPlayer = function (playerName) {
 }
 
 const isBlockFree = function (boardData, selectedBlock) {
-    return boardData[selectedBlock] == " ";
+    if (boardData[selectedBlock] == " ") {
+        return true;
+    }
+    else {
+        log(selectedBlock + " Block is already captured")
+        return false;
+    }
+
+}
+
+function botInput() {
+    return Math.ceil(Math.random() * 9);
 }
 
 function createBoard(boardData) {
@@ -99,6 +110,7 @@ module.exports = {
     readSelectedBlock,
     swapSymbol,
     swapPlayer,
+    botInput,
     readMenuOption,
     readModeOption,
     readSymbol,

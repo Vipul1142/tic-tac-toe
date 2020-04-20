@@ -3,6 +3,7 @@ const {
     log,
     arrayBuilder,
     createBoard,
+    botInput,
     swapPlayer,
     isBlockFree,
     swapSymbol,
@@ -23,29 +24,31 @@ const updateScreen = function (board) {
     log(board);
 };
 
-function botMove(game) {
-    let selectedBlock = Math.ceil(Math.random() * 9);
-    while (!isBlockFree(selectedBlock)) {
-        selectedBlock = Math.ceil(Math.random() * 9);
-    }
-    return selectedBlock;
-}
-
 const playGame = function (game) {
     let blocksLeft = 9;
     updateScreen(game.frame);
     while (blocksLeft--) {
         const currentPlayerName = game[game.turn].name;
         const currentPlayerSymbol = game[game.turn].symbol;
+        let selectedBlock;
         if (currentPlayerName == "bot") {
-            botMove();
+            selectedBlock = botInput();
+            while (!isBlockFree(game.data, selectedBlock)) {
+                selectedBlock = botInput();
+            }
         }
-        log("\nIt's your turn " + currentPlayerName + " (" + currentPlayerSymbol + ")");
-        log("Any number between 1 to 9");
-        let selectedBlock = readSelectedBlock;
-        log(currentPlayerName + " selected " + selectedBlock);
+        else {
+            log("\nIt's your turn " + currentPlayerName + " (" + currentPlayerSymbol + ")");
+            log("Any number between 1 to 9");
+            selectedBlock = readSelectedBlock();
+            while (!isBlockFree(game.data, selectedBlock)) {
+                selectedBlock = readSelectedBlock();
+            }
+        }
         game.data[selectedBlock] = currentPlayerSymbol;
         game.frame = createBoard(game.data);
+        updateScreen(game.frame);
+        log(currentPlayerName + " selected " + selectedBlock);
         game.turn = swapPlayer(game.turn);
 
     }
