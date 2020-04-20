@@ -9,6 +9,7 @@ const {
     readModeOption,
     readSymbol,
     readName,
+    winOrNot,
     getSelectedBlock
 } = require("./nucleas")
 const {
@@ -31,8 +32,12 @@ const playGame = function (game) {
         let selectedBlock = getSelectedBlock(game.data, currentName, currentSymbol);
         game.data[selectedBlock] = currentSymbol;
         game.frame = createBoard(game.data);
+        game[game.turn].inputs.push(selectedBlock);
         updateScreen(game.frame);
         log(currentName + " selected " + selectedBlock);
+        if (winOrNot(game.data)) {
+            log("jeet gya");
+        }
         game.turn = swapPlayer(game.turn);
     }
 }
