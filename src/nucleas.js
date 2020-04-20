@@ -43,7 +43,7 @@ const readName = function (message) {
     return name;
 };
 
-const readSelectedBlock = function () {
+const readHumanBlock = function () {
     return readLine.keyIn("Choose Number : ", { limit: '$<1-9>' });
 };
 
@@ -80,11 +80,26 @@ const isBlockFree = function (boardData, selectedBlock) {
         log(selectedBlock + " Block is already captured")
         return false;
     }
-
 }
 
-function botInput() {
+function getBotInput() {
     return Math.ceil(Math.random() * 9);
+}
+
+
+function getSelectedBlock(gameData, currentName, currentSymbol) {
+    let selectedBlock
+    do {
+        if (currentName == "bot") {
+            selectedBlock = getBotInput();
+        }
+        else {
+            log("\nIt's your turn " + currentName + " (" + currentSymbol + ")");
+            log("Any number between 1 to 9");
+            selectedBlock = readHumanBlock();
+        }
+    } while (!isBlockFree(gameData, selectedBlock));
+    return selectedBlock;
 }
 
 function createBoard(boardData) {
@@ -102,17 +117,13 @@ module.exports = {
     color,
     repeater,
     readLine,
-    readInput,
     arrayBuilder,
-    createDataLine,
     createBoard,
-    isBlockFree,
-    readSelectedBlock,
     swapSymbol,
     swapPlayer,
-    botInput,
     readMenuOption,
     readModeOption,
     readSymbol,
-    readName
+    readName,
+    getSelectedBlock
 };
