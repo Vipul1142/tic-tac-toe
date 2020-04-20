@@ -3,15 +3,13 @@ const {
     log,
     arrayBuilder,
     createBoard,
-    botInput,
     swapPlayer,
-    isBlockFree,
     swapSymbol,
     readMenuOption,
     readModeOption,
     readSymbol,
     readName,
-    readSelectedBlock
+    getSelectedBlock
 } = require("./nucleas")
 const {
     showTitle,
@@ -28,29 +26,14 @@ const playGame = function (game) {
     let blocksLeft = 9;
     updateScreen(game.frame);
     while (blocksLeft--) {
-        const currentPlayerName = game[game.turn].name;
-        const currentPlayerSymbol = game[game.turn].symbol;
-        let selectedBlock;
-        if (currentPlayerName == "bot") {
-            selectedBlock = botInput();
-            while (!isBlockFree(game.data, selectedBlock)) {
-                selectedBlock = botInput();
-            }
-        }
-        else {
-            log("\nIt's your turn " + currentPlayerName + " (" + currentPlayerSymbol + ")");
-            log("Any number between 1 to 9");
-            selectedBlock = readSelectedBlock();
-            while (!isBlockFree(game.data, selectedBlock)) {
-                selectedBlock = readSelectedBlock();
-            }
-        }
-        game.data[selectedBlock] = currentPlayerSymbol;
+        const currentName = game[game.turn].name;
+        const currentSymbol = game[game.turn].symbol;
+        let selectedBlock = getSelectedBlock(game.data, currentName, currentSymbol);
+        game.data[selectedBlock] = currentSymbol;
         game.frame = createBoard(game.data);
         updateScreen(game.frame);
-        log(currentPlayerName + " selected " + selectedBlock);
+        log(currentName + " selected " + selectedBlock);
         game.turn = swapPlayer(game.turn);
-
     }
 }
 
