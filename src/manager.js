@@ -1,10 +1,8 @@
 const {
     readLine,
     log,
-    readInput,
     arrayBuilder,
     createBoard,
-    switchTurn,
     swapPlayer,
     swapSymbol,
     readMenuOption,
@@ -33,7 +31,9 @@ const playGame = function (game) {
         log("Any number between 1 to 9");
         let selectedBlock = readLine.keyIn("Choose Number : ", { limit: '$<1-9>' });
         log(currentPlayerName + " selected " + selectedBlock);
-        game.turn = swapPlayer(currentPlayerName);
+        game.data[selectedBlock] = currentPlayerSymbol;
+        game.frame = createBoard(game.data);
+        game.turn = swapPlayer(game.turn);
     }
 }
 
