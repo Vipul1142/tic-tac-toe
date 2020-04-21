@@ -15,6 +15,10 @@ const repeater = function (string, times) {
     return string.repeat(times);
 };
 
+const arrayBuilder = function (char, size) {
+    return new Array(size).fill(char);
+};
+
 const readInput = function (message, constraint) {
     log(message);
     return readLine.prompt({ limit: constraint });
@@ -22,46 +26,25 @@ const readInput = function (message, constraint) {
 
 const readMenuOption = function () {
     let message = "Choose menu option";
-    let selectedOption = readInput(message, /^[0-3]$/g);
-    return selectedOption;
+    return readInput(message, /^[0-3]$/g);
 };
 
 const readModeOption = function () {
     let message = tab + "1. Computer\t2. Friend";
-    let selectedOption = readInput(message, /^[12]$/g);
-    return selectedOption;
+    return readInput(message, /^[12]$/g);
 };
 
-const readSymbol = function (name) {
-    let message = tab + name + " Choose your weapon X/O";
-    let selectedOption = readInput(message, /^[xo]$/gi);
-    return selectedOption.toUpperCase();
+const readSymbol = function (playerName) {
+    let message = tab + playerName + " Choose your weapon X/O";
+    return readInput(message, /^[xo]$/gi).toUpperCase();
 };
 
 const readName = function (message) {
-    let name = readLine.question(message);
-    return name;
+    return readLine.question(message);
 };
 
-const readHumanBlock = function () {
-    return readLine.keyIn("Choose Number : ", { limit: '$<1-9>' });
-};
-
-const arrayBuilder = function (char, size) {
-    return new Array(size).fill(char);
-};
-
-const createDataLine = function (space, data1, data2, data3) {
-    let line = space + "| " + data1 + " | " + data2 + " | " + data3 + " |\n";
-    return line;
-};
-
-const swapValue = function (key, first, second) {
-    if (key == first) {
-        return second;
-    } else {
-        return first;
-    }
+const swapValue = function (toCheck, first, second) {
+    return (toCheck == first) ? second : first;
 };
 
 const swapSymbol = function (symbol) {
@@ -72,70 +55,82 @@ const swapPlayer = function (playerName) {
     return swapValue(playerName, "player1", "player2");
 }
 
+const readHumanBlockInput = function () {
+    return readLine.keyIn("Choose Number : ", { limit: '$<1-9>' });
+};
+
+function getBotBlockInput() {
+    return Math.ceil(Math.random() * 9);
+}
+
 const isBlockFree = function (boardData, selectedBlock) {
     if (boardData[selectedBlock] == " ") {
         return true;
     }
     else {
-        log(selectedBlock + " Block is already captured")
+        log(" Block " + selectedBlock + " is already captured")
         return false;
     }
 }
-
-function getBotInput() {
-    return Math.ceil(Math.random() * 9);
-}
-
 
 function getSelectedBlock(gameData, players, currentName, currentSymbol) {
     let selectedBlock
     do {
         if (players == 1) {
-            selectedBlock = getBotInput();
+            selectedBlock = +getBotBlockInput();
         }
         else {
             log("\nIt's your turn " + currentName + " (" + currentSymbol + ")");
             log("Any number between 1 to 9");
-            selectedBlock = readHumanBlock();
+            selectedBlock = +readHumanBlockInput();
         }
     } while (!isBlockFree(gameData, selectedBlock));
     return selectedBlock;
 }
 
-function createBoard(boardData) {
-    const spc = repeater(" ", 35);
-    const borderLine = spc + repeater("+---", 3) + "+\n";
-    const dataLine1 = createDataLine(spc, boardData[1], boardData[2], boardData[3]);
-    const dataLine2 = createDataLine(spc, boardData[4], boardData[5], boardData[6]);
-    const dataLine3 = createDataLine(spc, boardData[7], boardData[8], boardData[9]);
-    return borderLine + dataLine1 + borderLine + dataLine2 + borderLine + dataLine3 + borderLine;
+const createDataRow = function (space, data1, data2, data3) {
+    return space + "| " + data1 + " | " + data2 + " | " + data3 + " |\n";
+};
+
+function joinBorder_Row(border, row1, row2, row3) {
+    return border + row1 + border + row2 + border + row3 + border;
 }
 
-const winOrNot = function (gameBlocks) {
-    gb = gameBlocks;
-    if (gb[1] == gb[2] && gb[1] == gb[3] && gb[1] != " ") {
-        return gb[1];
+function createBoard(boardData) {
+    const spaces = repeater(" ", 35);
+    const borderLine = spaces + repeater("+---", 3) + "+\n";
+    const dataRow1 = createDataRow(spaces, boardData[1], boardData[2], boardData[3]);
+    const dataRow2 = createDataRow(spaces, boardData[4], boardData[5], boardData[6]);
+    const dataRow3 = createDataRow(spaces, boardData[7], boardData[8], boardData[9]);
+    return joinBorder_Row(borderLine, dataRow1, dataRow2, dataRow3);
+}
+const isWinCondition = function (first, second, third) {
+    return (first == second && first == third && first != " ");
+}
+const winOrNot = function (gameBlock) {
+    if (isWinCondition(gameBlock[1], gameBlock[2], gameBlock[3]){
+        return true;
     }
-    if (gb[4] == gb[5] && gb[4] == gb[6] && gb[4] != " ") {
-        return gb[4];
+    if (isWinCondition(gameBlock[4], gameBlock[5], gameBlock[6]) {
+        return true;
     }
-    if (gb[7] == gb[8] && gb[7] == gb[9] && gb[7] != " ") {
-        return gb[7];
+    if (isWinCondition(gameBlock[7], gameBlock[8], gameBlock[9]) {
+        return true;
     }
-    if (gb[1] == gb[4] && gb[1] == gb[7] && gb[1] != " ") {
-        return gb[1];
+    if (isWinCondition(gameBlock[1], gameBlock[4], gameBlock[7]) {
+        return true;
     }
-    if (gb[2] == gb[5] && gb[2] == gb[8] && gb[2] != " ") {
-        return gb[2];
+    if (isWinCondition(gameBlock[2], gameBlock[5], gameBlock[8]) {
+        return true;
     }
-    if (gb[3] == gb[6] && gb[3] == gb[9] && gb[3] != " ") {
-        return gb[3];
+    if (isWinCondition(gameBlock[3], gameBlock[6], gameBlock[9]) {
+        return true;
     }
-    if (gb[3] == gb[5] && gb[3] == gb[7] && gb[3] != " ") {
-        return gb[3];
+    if (isWinCondition(gameBlock[1], gameBlock[5], gameBlock[7]) {
+        return true;
     }
-    if (gb[1] == gb[5] && gb[1] == gb[9] && gb[1] != " ") {
-        return gb[1];
+    if (isWinCondition(gameBlock[1], gameBlock[5], gameBlock[9]) {
+        return true;
     }
     return false;
 }
