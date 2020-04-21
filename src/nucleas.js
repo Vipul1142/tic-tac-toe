@@ -27,7 +27,7 @@ const readMenuOption = function () {
 };
 
 const readModeOption = function () {
-    let message = tab + "1. VS Human\t2. VS Bot";
+    let message = tab + "1. Computer\t2. Friend";
     let selectedOption = readInput(message, /^[12]$/g);
     return selectedOption;
 };
@@ -87,10 +87,10 @@ function getBotInput() {
 }
 
 
-function getSelectedBlock(gameData, currentName, currentSymbol) {
+function getSelectedBlock(gameData, players, currentName, currentSymbol) {
     let selectedBlock
     do {
-        if (currentName == "bot") {
+        if (players == 1) {
             selectedBlock = getBotInput();
         }
         else {
