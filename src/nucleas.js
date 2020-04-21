@@ -108,28 +108,28 @@ const isWinCondition = function (first, second, third) {
     return (first == second && first == third && first != " ");
 }
 const winOrNot = function (gameBlock) {
-    if (isWinCondition(gameBlock[1], gameBlock[2], gameBlock[3]){
+    if (isWinCondition(gameBlock[1], gameBlock[2], gameBlock[3])) {
         return true;
     }
-    if (isWinCondition(gameBlock[4], gameBlock[5], gameBlock[6]) {
+    if (isWinCondition(gameBlock[4], gameBlock[5], gameBlock[6])) {
         return true;
     }
-    if (isWinCondition(gameBlock[7], gameBlock[8], gameBlock[9]) {
+    if (isWinCondition(gameBlock[7], gameBlock[8], gameBlock[9])) {
         return true;
     }
-    if (isWinCondition(gameBlock[1], gameBlock[4], gameBlock[7]) {
+    if (isWinCondition(gameBlock[1], gameBlock[4], gameBlock[7])) {
         return true;
     }
-    if (isWinCondition(gameBlock[2], gameBlock[5], gameBlock[8]) {
+    if (isWinCondition(gameBlock[2], gameBlock[5], gameBlock[8])) {
         return true;
     }
-    if (isWinCondition(gameBlock[3], gameBlock[6], gameBlock[9]) {
+    if (isWinCondition(gameBlock[3], gameBlock[6], gameBlock[9])) {
         return true;
     }
-    if (isWinCondition(gameBlock[1], gameBlock[5], gameBlock[7]) {
+    if (isWinCondition(gameBlock[1], gameBlock[5], gameBlock[7])) {
         return true;
     }
-    if (isWinCondition(gameBlock[1], gameBlock[5], gameBlock[9]) {
+    if (isWinCondition(gameBlock[1], gameBlock[5], gameBlock[9])) {
         return true;
     }
     return false;
