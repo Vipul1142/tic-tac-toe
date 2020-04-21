@@ -23,20 +23,24 @@ const updateScreen = function (board) {
     log(board);
 };
 
+const showWinner = function (game) {
+    log(game[game.turn].name + " WON");
+};
+
 const playGame = function (game) {
     let blocksLeft = 9;
     updateScreen(game.frame);
     while (blocksLeft--) {
         const currentName = game[game.turn].name;
         const currentSymbol = game[game.turn].symbol;
-        let selectedBlock = getSelectedBlock(game.data, currentName, currentSymbol);
+        let selectedBlock = getSelectedBlock(game.data, game.mode, currentName, currentSymbol);
         game.data[selectedBlock] = currentSymbol;
         game.frame = createBoard(game.data);
         game[game.turn].inputs.push(selectedBlock);
         updateScreen(game.frame);
-        log(currentName + " selected " + selectedBlock);
+        log(currentName + "(" + currentSymbol + ") selected " + selectedBlock);
         if (winOrNot(game.data)) {
-            log("jeet gya");
+            return game;
         }
         game.turn = swapPlayer(game.turn);
     }
@@ -47,9 +51,9 @@ const buildGame = function (game) {
     game.frame = createBoard(game.data);
     game.mode = readModeOption();
     game.player1 = { name: "", symbol: "", inputs: [] };
-    game.player2 = { name: "bot", symbol: "", inputs: [] };
+    game.player2 = { name: "Computer", symbol: "", inputs: [] };
     game.player1.name = readName("Enter your name : ");
-    if (game.mode == 1) {
+    if (game.mode == 2) {
         game.player2.name = readName("Enter your friend's name : ");
     }
     game.player1.symbol = readSymbol(game.player1.name);
@@ -63,6 +67,7 @@ const startGame = function () {
     let game = {};
     game = buildGame(game);
     playGame(game);
+    showWinner(game);
 };
 
 const exitGame = function () {
