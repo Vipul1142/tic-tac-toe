@@ -73,10 +73,10 @@ const isBlockFree = function (boardData, selectedBlock) {
     }
 }
 
-function getSelectedBlock(gameData, players, currentName, currentSymbol) {
+function getSelectedBlock(gameData, currentName, currentSymbol) {
     let selectedBlock
     do {
-        if (players == 1) {
+        if (currentName == "Computer") {
             selectedBlock = +getBotBlockInput();
         }
         else {
@@ -126,7 +126,7 @@ const winOrNot = function (gameBlock) {
     if (isWinCondition(gameBlock[3], gameBlock[6], gameBlock[9])) {
         return true;
     }
-    if (isWinCondition(gameBlock[1], gameBlock[5], gameBlock[7])) {
+    if (isWinCondition(gameBlock[3], gameBlock[5], gameBlock[7])) {
         return true;
     }
     if (isWinCondition(gameBlock[1], gameBlock[5], gameBlock[9])) {

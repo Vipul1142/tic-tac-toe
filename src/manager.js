@@ -14,8 +14,7 @@ const {
 } = require("./nucleas")
 const {
     showTitle,
-    welcomeScreen,
-    tab
+    welcomeScreen
 } = require("./art")
 
 const updateScreen = function (board) {
@@ -23,8 +22,8 @@ const updateScreen = function (board) {
     log(board);
 };
 
-const showWinner = function (game) {
-    log(game[game.turn].name + " WON");
+const showWinner = function (winnerName) {
+    log(winnerName + " WON this match");
 };
 
 const playGame = function (game) {
@@ -33,17 +32,22 @@ const playGame = function (game) {
     while (blocksLeft--) {
         const currentName = game[game.turn].name;
         const currentSymbol = game[game.turn].symbol;
-        let selectedBlock = getSelectedBlock(game.data, game.mode, currentName, currentSymbol);
+        let selectedBlock = getSelectedBlock(game.data, currentName, currentSymbol);
         game.data[selectedBlock] = currentSymbol;
         game.frame = createBoard(game.data);
         game[game.turn].inputs.push(selectedBlock);
         updateScreen(game.frame);
         log(currentName + "(" + currentSymbol + ") selected " + selectedBlock);
         if (winOrNot(game.data)) {
-            return game;
+            showWinner(currentName);
+            break;
         }
         game.turn = swapPlayer(game.turn);
     }
+    if (!winOrNot(game.data)) {
+        log("It's a draw");
+    }
+    readLine.keyIn("Press any character key");
 }
 
 const buildGame = function (game) {
@@ -65,9 +69,7 @@ const buildGame = function (game) {
 const startGame = function () {
     showTitle();
     let game = {};
-    game = buildGame(game);
-    playGame(game);
-    showWinner(game);
+    playGame(buildGame(game));
 };
 
 const exitGame = function () {
@@ -82,13 +84,22 @@ const exitGame = function () {
 const executeMenuOption = function (selectedOption) {
     const menu = {
         1: startGame,
-        //2: functions,
-        //3: functions,
+        2: wipMessage,
+        3: wipMessage,
         0: exitGame,
     };
     menu[selectedOption]();
+    do {
+        welcomeScreen();
+        let selectedOption = readMenuOption();
+        menu[selectedOption]();
+    } while (selectedOption);
 };
-
+const wipMessage = function () {
+    log("This functionality is currently under WIP");
+    log("You can play the game meanwhile\nOr choose EXITs next time 😆 😉");
+    readLine.keyIn("Press any character key");
+}
 module.exports = {
     readMenuOption,
     executeMenuOption,
