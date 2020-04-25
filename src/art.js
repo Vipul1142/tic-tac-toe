@@ -20,12 +20,11 @@ function showTitle() {
 function welcomeScreen(params) {
     showTitle();
     welcome = "WELCOME\n\n";
-    optionMsg = "\t1. Play Game" + tab + "2. Show Stats" + tab + "3. Change Style" + tab + "0. Exit\n";
+    optionMsg = "\t   1. Play Game    2. Show Stats     3. Change Style     0. Exit\n";
     log(repeater("\t", 5) + welcome);
     log(optionMsg);
 }
 module.exports = {
     showTitle,
-    welcomeScreen,
-    tab
+    welcomeScreen
 }
