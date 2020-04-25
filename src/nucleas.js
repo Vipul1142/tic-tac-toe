@@ -30,7 +30,7 @@ const readMenuOption = function () {
 };
 
 const readModeOption = function () {
-    let message = tab + "1. Computer\t2. Friend";
+    let message = tab + "  1. Computer\t2. Friend";
     return readInput(message, /^[12]$/g);
 };
 
