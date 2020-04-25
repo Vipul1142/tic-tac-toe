@@ -69,7 +69,8 @@ const buildGame = function (game) {
 const startGame = function () {
     showTitle();
     let game = {};
-    playGame(buildGame(game));
+    game = buildGame(game);
+    playGame(game);
 };
 
 const exitGame = function () {
@@ -77,24 +78,8 @@ const exitGame = function () {
     if (readLine.keyInYNStrict(exitMsg)) {
         process.exit();
     }
-    welcomeScreen();
-    executeMenuOption(readMenuOption());
 };
 
-const executeMenuOption = function (selectedOption) {
-    const menu = {
-        1: startGame,
-        2: wipMessage,
-        3: wipMessage,
-        0: exitGame,
-    };
-    menu[selectedOption]();
-    do {
-        welcomeScreen();
-        let selectedOption = readMenuOption();
-        menu[selectedOption]();
-    } while (selectedOption);
-};
 const wipMessage = function () {
     log("This functionality is currently under WIP");
     log("You can play the game meanwhile\nOr choose EXITs next time 😆 😉");
@@ -102,6 +87,8 @@ const wipMessage = function () {
 }
 module.exports = {
     readMenuOption,
-    executeMenuOption,
-    welcomeScreen
+    welcomeScreen,
+    startGame,
+    exitGame,
+    wipMessage
 };
