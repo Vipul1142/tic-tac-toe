@@ -26,6 +26,23 @@ const showWinner = function (winnerName) {
     log(winnerName + " WON this match");
 };
 
+const buildReMatchGame = function (game) {
+    game.data = arrayBuilder(" ", 10);
+    game.frame = createBoard(game.data);
+    //game.mode = readModeOption();
+    //game.player1 = { name: "", symbol: "", inputs: [] };
+    //game.player2 = { name: "Computer", symbol: "", inputs: [] };
+    //game.player1.name = readName("Enter your name : ");
+    //if (game.mode == 2) {
+    //    game.player2.name = readName("Enter your friend's name : ");
+    //}
+    game.player1.inputs = game.player2.inputs = [];
+    game.player1.symbol = readSymbol(game.player1.name);
+    game.player2.symbol = swapSymbol(game.player1.symbol);
+    game.turn = "player1";
+    return game;
+}
+
 const playGame = function (game) {
     let blocksLeft = 9;
     updateScreen(game.frame);
@@ -47,7 +64,11 @@ const playGame = function (game) {
     if (!winOrNot(game.data)) {
         log("It's a draw");
     }
-    readLine.keyIn("Press any character key");
+    const isReMatch = readLine.keyInYNStrict("Do you want a rematch");
+    if (isReMatch) {
+        game = buildReMatchGame(game);
+        playGame(game);
+    }
 }
 
 const buildGame = function (game) {
