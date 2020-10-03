@@ -17,13 +17,15 @@ const {
     welcomeScreen
 } = require("./art")
 
+const chalk = require('chalk');
+
 const updateScreen = function (board) {
     showTitle();
     log(board);
 };
 
 const showWinner = function (winnerName) {
-    log(winnerName + " WON this match");
+    log(chalk.magentaBright(winnerName + " WON this match"));
 };
 
 const buildReMatchGame = function (game) {
@@ -54,7 +56,7 @@ const playGame = function (game) {
         game.frame = createBoard(game.data);
         game[game.turn].inputs.push(selectedBlock);
         updateScreen(game.frame);
-        log(currentName + "(" + currentSymbol + ") selected " + selectedBlock);
+        log(chalk.yellow((currentName + "(" + currentSymbol + ") selected " + selectedBlock)));
         if (winOrNot(game.data)) {
             showWinner(currentName);
             break;
@@ -62,9 +64,9 @@ const playGame = function (game) {
         game.turn = swapPlayer(game.turn);
     }
     if (!winOrNot(game.data)) {
-        log("It's a draw");
+        log(chalk.blue("It's a draw"));
     }
-    const isReMatch = readLine.keyInYNStrict("Do you want a rematch");
+    const isReMatch = readLine.keyInYNStrict(chalk.cyan("Do you want a rematch"));
     if (isReMatch) {
         game = buildReMatchGame(game);
         playGame(game);
@@ -77,9 +79,9 @@ const buildGame = function (game) {
     game.mode = readModeOption();
     game.player1 = { name: "", symbol: "", inputs: [] };
     game.player2 = { name: "Computer", symbol: "", inputs: [] };
-    game.player1.name = readName("Enter your name : ");
+    game.player1.name = readName(chalk.cyan("Enter your name : "));
     if (game.mode == 2) {
-        game.player2.name = readName("Enter your friend's name : ");
+        game.player2.name = readName(chalk.cyan("Enter your friend's name : "));
     }
     game.player1.symbol = readSymbol(game.player1.name);
     game.player2.symbol = swapSymbol(game.player1.symbol);
@@ -95,16 +97,16 @@ const startGame = function () {
 };
 
 const exitGame = function () {
-    let exitMsg = "Exit?";
+    let exitMsg = chalk.red("Exit?");
     if (readLine.keyInYNStrict(exitMsg)) {
         process.exit();
     }
 };
 
 const wipMessage = function () {
-    log("This functionality is currently under WIP");
-    log("You can play the game meanwhile\nOr choose EXITs next time 😆 😉");
-    readLine.keyIn("Press any character key");
+    log(chalk.red("This functionality is currently under WIP"));
+    log(chalk.red("You can play the game meanwhile\nOr choose EXITs next time 😆 😉"));
+    readLine.keyIn(chalk.cyan("Press any character key"));
 }
 module.exports = {
     readMenuOption,
