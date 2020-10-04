@@ -5,10 +5,11 @@ const clear = console.clear;
 const tab = "\t\t\t\t"
 const readLine = require("readline-sync");
 const color = require("colors/safe");
+const chalk = require("chalk");
 
 readLine.setDefaultOptions({
-    prompt: 'Choose : ',
-    limitMessage: "Only valid options works. Please try again."
+    prompt: chalk.yellow('Choose : '),
+    limitMessage: chalk.red("Only valid options works. Please try again.")
 });
 
 const repeater = function (string, times) {
@@ -25,17 +26,17 @@ const readInput = function (message, constraint) {
 };
 
 const readMenuOption = function () {
-    let message = "Choose menu option";
+    let message = chalk.cyan("Choose menu option");
     return readInput(message, /^[0-3]$/g);
 };
 
 const readModeOption = function () {
-    let message = tab + "  1. Computer\t2. Friend";
+    let message = tab + chalk.yellow("  1. Computer\t2. Friend");
     return readInput(message, /^[12]$/g);
 };
 
 const readSymbol = function (playerName) {
-    let message = tab + playerName + " Choose your weapon X/O";
+    let message = tab + chalk.yellow(playerName + " Choose your weapon X/O");
     return readInput(message, /^[xo]$/gi).toUpperCase();
 };
 
@@ -56,7 +57,7 @@ const swapPlayer = function (playerName) {
 }
 
 const readHumanBlockInput = function () {
-    return readLine.keyIn("Choose Number : ", { limit: '$<1-9>' });
+    return readLine.keyIn(chalk.cyan("Choose Number : "), { limit: '$<1-9>' });
 };
 
 function getBotBlockInput() {
@@ -68,7 +69,7 @@ const isBlockFree = function (boardData, selectedBlock) {
         return true;
     }
     else {
-        log(" Block " + selectedBlock + " is already captured")
+        log(chalk.red(" Block " + selectedBlock + " is already captured"));
         return false;
     }
 }
@@ -80,8 +81,8 @@ function getSelectedBlock(gameData, currentName, currentSymbol) {
             selectedBlock = +getBotBlockInput();
         }
         else {
-            log("\nIt's your turn " + currentName + " (" + currentSymbol + ")");
-            log("Any number between 1 to 9");
+            log(chalk.cyan("\nIt's your turn " + currentName + " (" + currentSymbol + ")"));
+            log(chalk.cyan("Any number between 1 to 9"));
             selectedBlock = +readHumanBlockInput();
         }
     } while (!isBlockFree(gameData, selectedBlock));
@@ -89,7 +90,7 @@ function getSelectedBlock(gameData, currentName, currentSymbol) {
 }
 
 const createDataRow = function (space, data1, data2, data3) {
-    return space + "| " + data1 + " | " + data2 + " | " + data3 + " |\n";
+    return space + chalk.magentaBright("| " + data1 + " | " + data2 + " | " + data3 + " |\n");
 };
 
 function joinBorder_Row(border, row1, row2, row3) {
@@ -98,7 +99,7 @@ function joinBorder_Row(border, row1, row2, row3) {
 
 function createBoard(boardData) {
     const spaces = repeater(" ", 35);
-    const borderLine = spaces + repeater("+---", 3) + "+\n";
+    const borderLine = spaces + repeater(chalk.yellow("+---"), 3) + "+\n";
     const dataRow1 = createDataRow(spaces, boardData[1], boardData[2], boardData[3]);
     const dataRow2 = createDataRow(spaces, boardData[4], boardData[5], boardData[6]);
     const dataRow3 = createDataRow(spaces, boardData[7], boardData[8], boardData[9]);
